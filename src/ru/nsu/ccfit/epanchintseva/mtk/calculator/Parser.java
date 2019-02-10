@@ -30,7 +30,7 @@ class Parser {
         return temp;
     }
 
-    private int parseTerm() throws LexerException, IOException, ParserException {
+    int parseTerm() throws LexerException, IOException, ParserException {
         int temp = this.parseFactor();
 
         while (current.type == LexemeType.MULTIPLY_DIVIDE) {
@@ -46,34 +46,34 @@ class Parser {
         return temp;
     }
 
-    private int parseFactor() throws LexerException, IOException, ParserException {
+    int parseFactor() throws LexerException, IOException, ParserException {
         int temp = this.parsePower();
         if (current.type == LexemeType.DEGREE) {
             current = lexer.getLexeme();
-           return (int)Math.pow(temp, this.parseFactor());
+            return (int) Math.pow(temp, this.parseFactor());
         }
         return temp;
     }
 
-    private int parsePower() throws LexerException, IOException, ParserException {
+    int parsePower() throws LexerException, IOException, ParserException {
         int sign = 1;
         if (current.type == LexemeType.MINUS) {
             sign = -1;
             current = lexer.getLexeme();
         }
-        return sign*this.parseAtom();
+        return sign * this.parseAtom();
     }
 
-    private int parseAtom() throws LexerException, IOException, ParserException {
+    int parseAtom() throws LexerException, IOException, ParserException {
         int temp = 0;
         if (current.type == LexemeType.NUMBER) {
             temp = Integer.valueOf(current.lexemeText.toString());
             current = lexer.getLexeme();
         }
-        if(current.type == LexemeType.LEFT_BRACKET){
+        if (current.type == LexemeType.LEFT_BRACKET) {
             current = lexer.getLexeme();
             temp = parseExpression();
-            if(current.type != LexemeType.RIGHT_BRACKET){
+            if (current.type != LexemeType.RIGHT_BRACKET) {
                 throw new ParserException();
             }
             current = lexer.getLexeme();
