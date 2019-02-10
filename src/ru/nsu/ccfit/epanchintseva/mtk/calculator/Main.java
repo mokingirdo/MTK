@@ -8,11 +8,14 @@ public class Main {
     public static void main(String[] args) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\yule2\\IdeaProjects\\Calculator\\src\\ru\\nsu\\ccfit\\epanchintseva\\mtk\\calculator\\input.txt"));
-            Lexer lexer = new Lexer(reader);
-            while (lexer.getLexeme() != null) {
-                System.out.println(lexer.currentLexeme.type + "  " + lexer.currentLexeme.lexemeText + '\n');
-            }
-        } catch (IOException | LexerException e) {
+            //Lexer lexer = new Lexer(reader);
+            Parser parser = new Parser(reader);
+            //while (lexer.getLexeme() != null) {
+               // System.out.println(lexer.currentLexeme.type + "  " + lexer.currentLexeme.lexemeText + '\n');
+           //}
+            int temp = parser.parseExpression();
+            System.out.println(temp);
+        } catch (IOException | LexerException | ParserException e) {
             e.getMessage();
         }
     }

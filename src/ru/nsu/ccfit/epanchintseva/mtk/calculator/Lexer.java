@@ -19,15 +19,15 @@ class Lexer {
             curr = reader.read();
         }
         currentLexeme.lexemeText.delete(0, currentLexeme.lexemeText.length());
+        currentLexeme.lexemeText.append((char) curr);
 
         while (Character.isSpaceChar(curr)) {
             curr = reader.read();
         }
         if (curr == -1) {
             currentLexeme.type = LexemeType.EOF;
-            return null;
+            return currentLexeme;
         }
-        currentLexeme.lexemeText.append((char) curr);
 
         switch ((char) curr) {
             case '0':
